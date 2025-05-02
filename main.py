@@ -41,5 +41,48 @@ WORLDCHAIN = 480
 ZKSYNC = 324
 ZORA = 7777777
 
-dune_supported_blockchains = set()
+dune_supported_blockchains = set(
+    ABSTRACT,
+    APECHAIN,
+    ARBITRUM_ONE,
+    ARBITRUM_NOVA,
+    AVALANCHE,
+    B3,
+    BERACHAIN,
+    BLAST,
+    BNB_MAINNET,
+    BOB,
+    BOBA,
+    CELO,
+    CORN,
+    DEGEN,
+    ETHEREUM_MAINNET,
+    FANTOM_OPERA,
+    FLARE,
+    GNOSIS,
+    INK,
+    KAIA,
+    LENS,
+    LINEA,
+    MANTLE,
+    NEAR,
+    OP_BNB,
+    OP_MAINNET,
+    PLUME_MAINNET,
+    POLYGON_MAINNET,
+    POLYGON_ZKEVM,
+    RONIN,
+    SCROLL,
+    SEI,
+    SHAPE,
+    SONIC,
+    SOPHON,
+    TRON,
+    UNICHAIN,
+    VICTION,
+    WORLDCHAIN,
+    ZKSYNC,
+    ZORA
+)
+
 
