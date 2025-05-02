@@ -1,3 +1,4 @@
+import argparse
 import json
 import os
 
@@ -147,7 +148,7 @@ def load_deployed_chains(fname: str, deployment: str):
         return set()
 
     # set path of the file
-    path = os.path.join(os.path.dirname(__file__), f"deployed_chains/{fname}")
+    path = os.path.join(os.path.dirname(__file__), fname)
 
     # check if the file exists
     if not os.path.exists(path):
@@ -200,11 +201,11 @@ def print_supported_blockchains(fname: str, deployments: list):
 
 
 def main():
-    fname = "proxy_factory_v1_1_1.json"
-    print_supported_blockchains(fname, ["canonical"])
-
-    fname = "proxy_factory_v1_3_0.json"
-    print_supported_blockchains(fname, ["canonical", "eip155"])
+    cli = argparse.ArgumentParser()
+    cli.add_argument("--fname", type=str, help="File name to load")
+    cli.add_argument("--deployments", nargs="*", type=str, help="Deployments to load")
+    args = cli.parse_args()
+    print_supported_blockchains(args.fname, args.deployments)
 
 
 if __name__ == "__main__":
