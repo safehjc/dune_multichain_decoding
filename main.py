@@ -191,8 +191,8 @@ def load_deployed_chains(fname: str, deployment: str):
 
 def print_supported_blockchains(fname: str, deployments: list):
     for deployment in deployments:
-        print("Loading file:", fname)  # canonical
-        print(deployment)
+        print(f"Loading file: {fname} as deployment: {deployment}")  # canonical
+
         address, networks = load_deployed_chains(fname, deployment)
         print(f"Contract address: {address}")
         for network in networks:
