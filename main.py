@@ -197,6 +197,8 @@ def print_supported_blockchains(fname: str, deployments: list):
 
         address, networks = load_deployed_chains(fname, deployment)
         print(f"Contract address: {address}")
+        print()
+        print("We need the following chains in Dune:")
         for network in networks:
             print(f"=> {network}")
         print()
