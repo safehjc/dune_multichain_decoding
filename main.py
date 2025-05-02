@@ -2,7 +2,6 @@ import argparse
 import json
 import os
 
-from typing import List
 
 # define dune blockchains:
 ABSTRACT = 2741
