@@ -184,6 +184,9 @@ def load_deployed_chains(fname: str, deployment: str):
 
     # get contract address
     deployments = data["deployments"]
+    if deployment not in deployments:
+        raise KeyError(f"Deployment {deployment} not found in {fname}")
+
     contract_address = deployments[deployment]["address"]
     return contract_address, valid_networks
 
