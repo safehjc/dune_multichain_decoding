@@ -1,7 +1,7 @@
 import json
 import os
 
-from typing import Set
+from typing import List
 
 # define dune blockchains:
 ABSTRACT = 2741
@@ -141,7 +141,7 @@ bc_mapping = {
 }
 
 
-def load_deployed_chains(fname: str, deployment: str) -> Set[int]:
+def load_deployed_chains(fname: str, deployment: str):
     # check if deoloyment is valid
     if deployment not in ["canonical", "eip155", "zksync"]:
         return set()
@@ -175,15 +175,36 @@ def load_deployed_chains(fname: str, deployment: str) -> Set[int]:
             for n in v:
                 if n == deployment:
                     valid_networks.add(k)
-    return valid_networks
+
+    # we want names not chain ids
+    valid_networks = {bc_mapping[k] for k in valid_networks}
+
+    # lets sort this
+    valid_networks = sorted(valid_networks)
+
+    # get contract address
+    deployments = data["deployments"]
+    contract_address = deployments[deployment]["address"]
+    return contract_address, valid_networks
+
+
+def print_supported_blockchains(fname: str, deployments: list):
+    for deployment in deployments:
+        print("Loading file:", fname)  # canonical
+        print(deployment)
+        address, networks = load_deployed_chains(fname, deployment)
+        print(f"Contract address: {address}")
+        for network in networks:
+            print(f"=> {network}")
+        print()
 
 
 def main():
-    # canonical
-    safe_proxy_factory_v1_3_0 = load_deployed_chains(
-        "proxy_factory_v1_3_0.json", "canonical"
-    )
-    print(safe_proxy_factory_v1_3_0)
+    fname = "proxy_factory_v1_1_1.json"
+    print_supported_blockchains(fname, ["canonical"])
+
+    fname = "proxy_factory_v1_3_0.json"
+    print_supported_blockchains(fname, ["canonical", "eip155"])
 
 
 if __name__ == "__main__":
