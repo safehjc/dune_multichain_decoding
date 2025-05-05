@@ -1,6 +1,7 @@
 import argparse
 import json
 import os
+import sys
 
 
 # define blockchains:
@@ -171,6 +172,18 @@ bc_mapping = {
 }
 
 
+class MyArgParser(argparse.ArgumentParser):
+    """Class to override error handling in argparse.
+
+    Print a custom error message and the help message.
+    """
+
+    def error(self, message):
+        sys.stderr.write("error: %s\n" % message)
+        self.print_help()
+        sys.exit(2)
+
+
 def load_deployed_chains(fname: str, deployment: str):
     # check if deoloyment is valid
     if deployment not in ["canonical", "eip155", "zksync"]:
@@ -238,10 +251,19 @@ def print_supported_blockchains(fname: str, deployments: list):
 
 
 def main():
-    cli = argparse.ArgumentParser()
+    cli = MyArgParser()
     cli.add_argument("--fname", type=str, help="File name to load")
     cli.add_argument("--deployments", nargs="*", type=str, help="Deployments to load")
     args = cli.parse_args()
+
+    if not args.fname:
+        print("usage: python main.py --fname <filename> --deployments <deployment>")
+        sys.exit(2)
+
+    if not args.deployments:
+        print("usage: python main.py --fname <filename> --deployments <deployment>")
+        sys.exit(2)
+
     print_supported_blockchains(args.fname, args.deployments)
 
 
