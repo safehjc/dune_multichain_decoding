@@ -3,7 +3,7 @@ import json
 import os
 
 
-# define dune blockchains:
+# define blockchains:
 ABSTRACT = 2741
 APECHAIN = 33139
 ARBITRUM_ONE = 42161
@@ -46,6 +46,36 @@ WORLDCHAIN = 480
 ZKSYNC = 324
 ZORA = 7777777
 
+X_LAYER = 196
+AURORA = 1313161554
+
+# blockchains that are supported by safe wallet
+safe_wallet_supported_blockchains = set(
+    [
+        AURORA,
+        ETHEREUM_MAINNET,
+        GNOSIS,
+        POLYGON_MAINNET,
+        POLYGON_ZKEVM,
+        BNB_MAINNET,
+        ARBITRUM_ONE,
+        OP_MAINNET,
+        BERACHAIN,
+        INK,
+        LINEA,
+        SONIC,
+        UNICHAIN,
+        SCROLL,
+        CELO,
+        AVALANCHE,
+        BLAST,
+        MANTLE,
+        WORLDCHAIN,
+        X_LAYER,
+    ]
+)
+
+# blockchains that are supported by dune
 dune_supported_blockchains = set(
     [
         ABSTRACT,
@@ -168,6 +198,9 @@ def load_deployed_chains(fname: str, deployment: str):
         if k not in dune_supported_blockchains:
             continue
 
+        if k not in safe_wallet_supported_blockchains:
+            continue
+
         if type(v) is str:
             if v == deployment:
                 valid_networks.add(k)
@@ -200,7 +233,7 @@ def print_supported_blockchains(fname: str, deployments: list):
         print()
         print("We need the following chains in Dune:")
         for network in networks:
-            print(f"=> {network}")
+            print(f"{network}")
         print()
 
 
